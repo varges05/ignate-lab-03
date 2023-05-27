@@ -1,17 +1,30 @@
-import type { StorybookConfig } from "@storybook/nextjs";
-const config: StorybookConfig = {
-  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
-  addons: [
+module.exports = {
+  "stories": [
+    "../src/**/**/*.stories.mdx",
+    "../src/**/**/*.stories.@(js|jsx|ts|tsx)"
+  ],
+  "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
+    "@storybook/addon-a11y"
   ],
-  framework: {
-    name: "@storybook/nextjs",
-    options: {},
+  "framework": "@storybook/react",
+  "core": {
+    "builder": "@storybook/builder-vite"
   },
-  docs: {
-    autodocs: "tag",
+  "features": {
+    "storyStoreV7": true,
+    "interactionsDebugger": true,
   },
-};
-export default config;
+  "staticDirs": [
+	  "../public"
+  ],
+  viteFinal: (config, { configType }) => {
+    if (configType === 'PRODUCTION') {
+      config.base = '/ignate-lab-03/'
+    }
+
+    return config
+  }
+}
